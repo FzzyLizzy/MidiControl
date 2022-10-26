@@ -7,7 +7,6 @@ def start():
     if not process_exists('Soundpad.exe'):
       StartSoudPad()
       print('Soundoad not running!')
-    SoundPad = FindSoundpad()
     pygame.midi.init()
     os.system('cls')
     print_devices()
@@ -51,3 +50,4 @@ def readInput(input_device):
                 os.system("{0} -rc DoPlaySound({1})".format(SoundPad,note_number))
                 
 start()
+SoundPad = FindSoundpad()
