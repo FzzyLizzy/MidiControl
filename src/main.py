@@ -1,6 +1,17 @@
+from winreg import *
 import os
 import pygame.midi
-from winreg import *
+import subprocess
+
+def start():
+    if not process_exists('Soundpad.exe'):
+      StartSoudPad()
+      print('Soundoad not running!')
+    SoundPad = FindSoundpad()
+    pygame.midi.init()
+    os.system('cls')
+    print_devices()
+    readInput(pygame.midi.Input(1))
 
 def FindSoundpad():
     Registry = ConnectRegistry(None, HKEY_CLASSES_ROOT)
@@ -12,6 +23,15 @@ def FindSoundpad():
         return path
     except WindowsError: 
         print()
+
+def process_exists(process_name):
+    call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
+    output = subprocess.check_output(call).decode()
+    last_line = output.strip().split('\r\n')[-1]
+    return last_line.lower().startswith(process_name.lower())
+
+def StartSoudPad():
+    os.system("start \"\" steam://rungameid/629520")
 
 def print_devices():
     for n in range(pygame.midi.get_count()):
@@ -30,9 +50,4 @@ def readInput(input_device):
                 print ("Key:{0} \n\rNote:{1}".format(id,note_number))
                 os.system("{0} -rc DoPlaySound({1})".format(SoundPad,note_number))
                 
-
-pygame.midi.init()
-os.system('cls')
-SoundPad = FindSoundpad()
-print_devices()
-readInput(pygame.midi.Input(1))
+start()
