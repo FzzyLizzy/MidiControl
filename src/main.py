@@ -5,7 +5,7 @@ import subprocess
 
 def start():
     if not process_exists('Soundpad.exe'):
-      StartSoudPad()
+      os.system("start \"\" steam://rungameid/629520")
       print('Soundoad not running!')
     pygame.midi.init()
     os.system('cls')
@@ -28,9 +28,6 @@ def process_exists(process_name):
     output = subprocess.check_output(call).decode()
     last_line = output.strip().split('\r\n')[-1]
     return last_line.lower().startswith(process_name.lower())
-
-def StartSoudPad():
-    os.system("start \"\" steam://rungameid/629520")
 
 def print_devices():
     for n in range(pygame.midi.get_count()):
