@@ -37,6 +37,7 @@ def print_devices():
         print (n,pygame.midi.get_device_info(n))
 
 def readInput(input_device):
+    SoundPad = FindSoundpad()
     while True:
         if input_device.poll():
             event = input_device.read(1)[0]
@@ -50,4 +51,3 @@ def readInput(input_device):
                 os.system("{0} -rc DoPlaySound({1})".format(SoundPad,note_number))
                 
 start()
-SoundPad = FindSoundpad()
